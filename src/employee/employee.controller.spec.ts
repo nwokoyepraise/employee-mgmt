@@ -15,4 +15,9 @@ describe('EmployeeController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('should be able to add employee', async () => {
+    const employee = await controller.add()
+    expect(employee).not.toBeNull();
+  });
 });
