@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
@@ -46,10 +46,12 @@ export class AddEmployeeDto {
   @ValidateNested()
   readonly homeAddress: Address;
 
+  @Type(()=> Date)
   @IsNotEmpty()
   @IsDate()
   readonly doe: Date; //date of employment
 
+  @Type(()=> Date)
   @IsNotEmpty()
   @IsDate()
   readonly dob: Date; //date of birth
