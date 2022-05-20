@@ -1,27 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { employee, updatedEmployee } from './constants/employee.constant';
 import { EmployeeDto } from './dto/Employee.dto';
+import { EmployeeRepository } from './employee.repository';
 import { EmployeeService } from './employee.service';
 import { Employee } from './schemas/employee.schema';
 
-const employee: Employee = {
-  name: 'name',
-  email: 'email@email.com',
-  phone: '+2344444444',
-  homeAddress: {
-    city: 'city',
-    zipCode: 1234,
-    addressLine1: 'addressLine1',
-    addressLine2: 'addressLine2',
-  },
-  dob: new Date('1950-01-01'),
-  doe: new Date('2002-12-09'),
+const mockEmployeeRepository = {
+  add: jest.fn((addEmployeeDto: EmployeeDto) =>  employee),
+  update: jest.fn((id: string, updateEmployeeDto: EmployeeDto) => updatedEmployee),
 };
-
-function mockEmployeeModel(addEmployeeDto: EmployeeDto) {
-  this.save = () => {
-    return addEmployeeDto;
-  };
-}
 
 describe('EmployeeService', () => {
   let employeeService: EmployeeService;
@@ -30,7 +17,7 @@ describe('EmployeeService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EmployeeService,
-        { provide: 'EmployeeModel', useValue: mockEmployeeModel },
+        { provide: EmployeeRepository, useValue: mockEmployeeRepository },
       ],
     }).compile();
 
@@ -43,6 +30,14 @@ describe('EmployeeService', () => {
 
   it('should be able to add employee', async () => {
     let result = await employeeService.add(employee);
-    expect(result).toEqual(employee)
+    expect(result).toEqual(employee);
+  });
+
+  it('should be able to update employee', async () => {
+    let result = await employeeService.update(
+      '62873cf37262322c0744ccb1',
+      updatedEmployee,
+    );
+    expect(result).toEqual(updatedEmployee);
   });
 });
