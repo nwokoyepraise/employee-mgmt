@@ -1,4 +1,4 @@
-import mongoose, { CallbackError, MongooseError, SaveOptions } from 'mongoose';
+import mongoose, { CallbackError, MongooseError, QueryOptions, SaveOptions } from 'mongoose';
 
 export const softDeletePlugin = (schema: mongoose.Schema) => {
   schema.add({
@@ -43,8 +43,8 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
   });
 
   //define static custom method to find all documents that were soft-deleted
-  schema.static('findAllSoftDeleted', async function () {
-    return this.find({ isDeleted: true });
+  schema.static('findAllSoftDeleted', async function ( options?: QueryOptions) {
+    return this.find({ isDeleted: true, ...options }, {}, {limit: 10});
   });
 
   //define static custom method to find only document with id which was soft-deleted

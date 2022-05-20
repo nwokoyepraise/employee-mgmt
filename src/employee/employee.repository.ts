@@ -34,4 +34,8 @@ export class EmployeeRepository {
   async retrieve(createdBefore?: Date): Promise<Employee[]> {
     return await this.employeeModel.find({createdAt: {$lt: createdBefore}}).limit(10).sort({ createdAt: "desc" }).exec();
   }
+
+  async retrieveSoftDeleted(createdBefore?: Date): Promise<Employee[]> {
+    return await this.employeeModel.findAllSoftDeleted({createdAt: {$lt: createdBefore}});
+  }
 }

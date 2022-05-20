@@ -16,7 +16,7 @@ export class EmployeeController {
         return await this.employeeService.update(searchParams.id, updateDto);
     }
 
-    @Get()
+    @Get('')
     async retrieve (@Query() queryParams: QueryParams) {
         return await this.employeeService.retrieve(queryParams.createdBefore);
     }
@@ -29,6 +29,11 @@ export class EmployeeController {
     @Post(':id/restore')
     async restoreSoftDelete (@Param() searchParams: SearchParams) {
         return await this.employeeService.restoreSoftDelete(searchParams.id);
+    }
+
+    @Get('/deleted')
+    async retrieveSoftDeleted (@Query() queryParams: QueryParams) {
+        return await this.employeeService.retrieveSoftDeleted(queryParams.createdBefore);
     }
 
 }

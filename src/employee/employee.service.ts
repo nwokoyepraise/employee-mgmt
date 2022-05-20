@@ -28,4 +28,8 @@ export class EmployeeService {
   async retrieve(createdBefore? : Date): Promise<Employee[]> {
       return await this.employeeRepository.retrieve(createdBefore);
   }
+
+  async retrieveSoftDeleted(createdBefore? : Date): Promise<Employee[]> {
+    return await this.employeeRepository.retrieveSoftDeleted(createdBefore);
+}
 }

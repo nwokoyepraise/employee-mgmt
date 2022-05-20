@@ -2,7 +2,7 @@ import { Document, SaveOptions } from 'mongoose';
 import * as mongoose from 'mongoose';
 
 export interface SoftDeleteModel<T extends Document> extends mongoose.Model<T> {
-  findAllSoftDeleted(): Promise<T[]>;
+  findAllSoftDeleted(options? : mongoose.QueryOptions): Promise<T[]>;
   restoreAllSoftDeleted(query: Record<string, any>): Promise<{ restored: number }>;
   softDelete(
     query: Record<string, any>,
