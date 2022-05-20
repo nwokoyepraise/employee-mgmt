@@ -1,18 +1,18 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { employee, updatedEmployee } from './constants/employee.constant';
+import { employee, softDeletedEmployee, updatedEmployee } from './constants/employee.constant';
 import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeController } from './employee.controller';
 import { EmployeeService } from './employee.service';
-import { Employee } from './schemas/employee.schema';
-
-
 
 const employeeServiceProvider = {
   provide: EmployeeService,
   useFactory: () => ({
     add: jest.fn((employeeData: EmployeeDto) => employee),
     update: jest.fn((updatedData: EmployeeDto) => updatedEmployee),
+    softDelete: jest.fn((id: string) => updatedEmployee),
+    retrieve: jest.fn(() => [employee]),
+    retrieveSoftDeleted: jest.fn(()=> [softDeletedEmployee]),
   }),
 };
 
@@ -49,9 +49,19 @@ describe('EmployeeController', () => {
   });
 
   it('should be able to delete employee', async () => {
-    // let result = await employeeController.delete(
-    //   { id: '62873cf37262322c0744ccb1' }
-    // );
-    // expect(result).toEqual(updatedEmployee);
+    let result = await employeeController.softDelete({
+      id: '62873cf37262322c0744ccb1',
+    });
+    expect(result).toEqual(updatedEmployee);
   });
+
+  it('should be able to retrieve employees', async () => {
+    let result = await employeeController.retrieve();
+    expect(result).toContain(employee);
+  });
+
+  it ('should be able to retrieve soft-deleted employees', async () => {
+    let result = await employeeController.retrieveSoftDeleted();
+    expect(result).toContain(softDeletedEmployee);
+  })
 });
