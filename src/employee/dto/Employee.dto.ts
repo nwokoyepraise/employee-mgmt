@@ -28,7 +28,7 @@ class Address {
   readonly addressLine2? : string;
 }
 
-export class AddEmployeeDto {
+export class EmployeeDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;

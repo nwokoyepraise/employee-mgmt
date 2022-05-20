@@ -1,12 +1,13 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
-import { AddEmployeeDto } from './dto/addEmployee.dto';
+import { async } from 'rxjs';
+import { EmployeeDto} from './dto/Employee.dto';
 import { EmployeeController } from './employee.controller';
 import { EmployeeService } from './employee.service';
 import { Employee, EmployeeDocument } from './schemas/employee.schema';
 
-const employee : Employee = {
+const employee: Employee = {
   name: 'name',
   email: 'email@email.com',
   phone: '+2344444444',
@@ -23,9 +24,7 @@ const employee : Employee = {
 const employeeServiceProvider = {
   provide: EmployeeService,
   useFactory: () => ({
-    add: jest.fn((employeeData: AddEmployeeDto) => (
-      employee
-    )),
+    add: jest.fn((employeeData: EmployeeDto) => employee),
   }),
 };
 
@@ -48,9 +47,12 @@ describe('EmployeeController', () => {
   });
 
   it('should be able to add employee', async () => {
-
     let result = await employeeController.add(employee);
     expect(result).not.toBeNull();
     expect(result).toEqual(employee);
+  });
+
+  it('should be able to update employee', async () => {
+    //let result = await employeeController.update();
   });
 });

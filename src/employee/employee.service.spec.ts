@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AddEmployeeDto } from './dto/addEmployee.dto';
+import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeService } from './employee.service';
 import { Employee } from './schemas/employee.schema';
 
@@ -17,7 +17,7 @@ const employee: Employee = {
   doe: new Date('2002-12-09'),
 };
 
-function mockEmployeeModel(addEmployeeDto: AddEmployeeDto) {
+function mockEmployeeModel(addEmployeeDto: EmployeeDto) {
   this.save = () => {
     return addEmployeeDto;
   };
