@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { throws } from 'assert';
-import { Model } from 'mongoose';
 import { EmployeeDto } from './dto/Employee.dto';
 import { SoftDeleteModel } from './plugins/softDelete.model';
 import { Employee, EmployeeDocument } from './schemas/employee.schema';
