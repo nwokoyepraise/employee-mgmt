@@ -1,13 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { employee, updatedEmployee } from './constants/employee.constant';
+import { employee, softDeletedEmployee, updatedEmployee } from './constants/employee.constant';
 import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeRepository } from './employee.repository';
 import { EmployeeService } from './employee.service';
-import { Employee } from './schemas/employee.schema';
 
 const mockEmployeeRepository = {
-  add: jest.fn((addEmployeeDto: EmployeeDto) =>  employee),
-  update: jest.fn((id: string, updateEmployeeDto: EmployeeDto) => updatedEmployee),
+  add: jest.fn((addEmployeeDto: EmployeeDto) => employee),
+  update: jest.fn(
+    (id: string, updateEmployeeDto: EmployeeDto) => updatedEmployee,
+  ),
+  softDelete: jest.fn((id: string) => updatedEmployee),
+  retrieve: jest.fn(()=> [employee]),
+  retrieveSoftDeleted: jest.fn(()=> [softDeletedEmployee])
 };
 
 describe('EmployeeService', () => {
@@ -40,4 +44,19 @@ describe('EmployeeService', () => {
     );
     expect(result).toEqual(updatedEmployee);
   });
+
+  it('should be able to delete employee', async () => {
+    let result = await employeeService.softDelete('62873cf37262322c0744ccb1');
+    expect(result).toEqual(updatedEmployee);
+  });
+
+  it('should be able to retrieve employees', async () => {
+    let result = await employeeService.retrieve();
+    expect(result).toContain(employee);
+  });
+
+  it ('should be able to retrieve soft-deleted employees', async () => {
+    let result = await employeeService.retrieveSoftDeleted();
+    expect(result).toContain(softDeletedEmployee);
+  })
 });
