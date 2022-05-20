@@ -7,13 +7,21 @@ import { Employee, EmployeeDocument } from './schemas/employee.schema';
 
 @Injectable()
 export class EmployeeService {
-    constructor(private readonly employeeRepository: EmployeeRepository){}
+  constructor(private readonly employeeRepository: EmployeeRepository) {}
 
-    async add(employeeDto: EmployeeDto): Promise<Employee> {
-        return await this.employeeRepository.add(employeeDto)
-    }
+  async add(employeeDto: EmployeeDto): Promise<Employee> {
+    return await this.employeeRepository.add(employeeDto);
+  }
 
-    async update(id: string, employeeDto: EmployeeDto) : Promise<Employee> {  
-        return await this.employeeRepository.update(id, employeeDto)
-    }
+  async update(id: string, employeeDto: EmployeeDto): Promise<Employee> {
+    return await this.employeeRepository.update(id, employeeDto);
+  }
+
+  async softDelete(id: string): Promise<EmployeeDto> {
+    return await this.employeeRepository.softDelete(id);
+  }
+
+  async restoreSoftDelete(id: string) : Promise<EmployeeDto> {
+      return await this.employeeRepository.restoreSoftDelete(id);
+  }
 }

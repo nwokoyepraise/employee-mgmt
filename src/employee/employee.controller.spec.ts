@@ -47,4 +47,11 @@ describe('EmployeeController', () => {
     );
     expect(result).toEqual(updatedEmployee);
   });
+
+  it('should be able to delete employee', async () => {
+    // let result = await employeeController.delete(
+    //   { id: '62873cf37262322c0744ccb1' }
+    // );
+    // expect(result).toEqual(updatedEmployee);
+  });
 });
