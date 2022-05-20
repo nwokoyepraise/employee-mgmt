@@ -35,6 +35,12 @@ export class SearchParams {
   id: string;
 }
 
+export class QueryParams {
+  @Type(() => Date)
+  @IsDate()
+  createdBefore?: Date;
+}
+
 export class EmployeeDto {
   @IsNotEmpty()
   @IsString()

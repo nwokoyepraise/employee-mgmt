@@ -25,7 +25,7 @@ export class EmployeeService {
       return await this.employeeRepository.restoreSoftDelete(id);
   }
 
-  async retrieve(): Promise<Employee[]> {
-      return await this.employeeRepository.retrieve();
+  async retrieve(createdBefore? : Date): Promise<Employee[]> {
+      return await this.employeeRepository.retrieve(createdBefore);
   }
 }

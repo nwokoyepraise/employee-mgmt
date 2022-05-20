@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { EmployeeDto as EmployeeDto, SearchParams } from './dto/Employee.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
+import { EmployeeDto as EmployeeDto, QueryParams, SearchParams } from './dto/Employee.dto';
 import { EmployeeService } from './employee.service';
 
 @Controller('employee')
@@ -17,8 +17,8 @@ export class EmployeeController {
     }
 
     @Get()
-    async retrieve () {
-        return await this.employeeService.retrieve();
+    async retrieve (@Query() queryParams: QueryParams) {
+        return await this.employeeService.retrieve(queryParams.createdBefore);
     }
 
     @Delete(':id')
