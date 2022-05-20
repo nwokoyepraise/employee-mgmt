@@ -1,5 +1,6 @@
 import { Body, Controller, Param, Post, Put } from '@nestjs/common';
-import { EmployeeDto as EmployeeDto } from './dto/Employee.dto';
+import { IsMongoId } from 'class-validator';
+import { EmployeeDto as EmployeeDto, SearchParams } from './dto/Employee.dto';
 import { EmployeeService } from './employee.service';
 
 @Controller('employee')
@@ -12,8 +13,8 @@ export class EmployeeController {
     }
 
     @Put(":id")
-    async update(@Param('id') id: string, @Body() updateDto: EmployeeDto) {
-        return await this.employeeService.update(id, updateDto);
+    async update(@Param() searchParams: SearchParams, @Body() updateDto: EmployeeDto) {
+        return await this.employeeService.update(searchParams.id, updateDto);
     }
 
 }

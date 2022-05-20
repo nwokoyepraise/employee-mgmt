@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
+  IsMongoId,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -17,15 +18,21 @@ class Address {
 
   @IsNotEmpty()
   @IsNumber()
-  readonly zipCode : number;
+  readonly zipCode: number;
 
   @IsNotEmpty()
   @IsString()
-  readonly addressLine1 : string;
+  readonly addressLine1: string;
 
   @IsString()
   @IsOptional()
-  readonly addressLine2? : string;
+  readonly addressLine2?: string;
+}
+
+export class SearchParams {
+  @IsNotEmpty()
+  @IsMongoId()
+  id: string;
 }
 
 export class EmployeeDto {
@@ -46,12 +53,12 @@ export class EmployeeDto {
   @ValidateNested()
   readonly homeAddress: Address;
 
-  @Type(()=> Date)
+  @Type(() => Date)
   @IsNotEmpty()
   @IsDate()
   readonly doe: Date; //date of employment
 
-  @Type(()=> Date)
+  @Type(() => Date)
   @IsNotEmpty()
   @IsDate()
   readonly dob: Date; //date of birth
