@@ -25,7 +25,7 @@ class Address {
 
   @IsString()
   @IsOptional()
-  readonly addressLine2 : string;
+  readonly addressLine2? : string;
 }
 
 export class AddEmployeeDto {
@@ -39,12 +39,12 @@ export class AddEmployeeDto {
 
   @IsNotEmpty()
   @IsPhoneNumber()
-  readonly phone: number;
+  readonly phone: string;
 
   @IsNotEmpty()
   @Type(() => Address)
   @ValidateNested()
-  readonly homeaddress: Address;
+  readonly homeAddress: Address;
 
   @IsNotEmpty()
   @IsDate()
