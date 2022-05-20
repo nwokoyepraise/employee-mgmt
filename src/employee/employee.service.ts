@@ -17,11 +17,15 @@ export class EmployeeService {
     return await this.employeeRepository.update(id, employeeDto);
   }
 
-  async softDelete(id: string): Promise<EmployeeDto> {
+  async softDelete(id: string): Promise<Employee> {
     return await this.employeeRepository.softDelete(id);
   }
 
-  async restoreSoftDelete(id: string) : Promise<EmployeeDto> {
+  async restoreSoftDelete(id: string) : Promise<Employee> {
       return await this.employeeRepository.restoreSoftDelete(id);
+  }
+
+  async retrieve(): Promise<Employee[]> {
+      return await this.employeeRepository.retrieve();
   }
 }

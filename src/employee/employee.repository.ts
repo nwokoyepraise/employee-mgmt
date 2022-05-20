@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { throws } from "assert";
 import { Model } from "mongoose";
 import { EmployeeDto } from "./dto/Employee.dto";
 import { SoftDeleteModel } from "./plugins/softDelete.model";
@@ -23,5 +24,9 @@ export class EmployeeRepository {
 
     async restoreSoftDelete(id : string) : Promise<Employee> {
         return await this.employeeModel.restoreSoftDeletedById(id);
+    }
+
+    async retrieve() : Promise<Employee[]> {
+        return await this.employeeModel.find().exec();
     }
 }
