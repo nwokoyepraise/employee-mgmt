@@ -38,6 +38,7 @@ export class SearchParams {
 export class QueryParams {
   @Type(() => Date)
   @IsDate()
+  @IsOptional()
   createdBefore?: Date;
 }
 
