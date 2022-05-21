@@ -4,6 +4,7 @@ import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeRepository } from './employee.repository';
 import { EmployeeService } from './employee.service';
 
+//describe mock employee repository
 const mockEmployeeRepository = {
   add: jest.fn((addEmployeeDto: EmployeeDto) => employee),
   update: jest.fn(

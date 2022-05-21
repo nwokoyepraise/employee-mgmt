@@ -8,6 +8,7 @@ import {
 import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeRepository } from './employee.repository';
 
+//describe mock employee repository provider
 const employeeRepositoryProvider = {
   provide: EmployeeRepository,
   useFactory: () => ({
@@ -20,6 +21,7 @@ const employeeRepositoryProvider = {
   }),
 };
 
+//describe mock employee model provider
 const employeeModelProvider = {
   provide: 'EmployeeModel',
   useFactory: () => ({
