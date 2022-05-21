@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { employee, softDeletedEmployee, updatedEmployee } from './constants/employee.constant';
+import { employee, restoredEmployee, softDeletedEmployee, updatedEmployee } from './constants/employee.constant';
 import { EmployeeDto } from './dto/Employee.dto';
 import { EmployeeRepository } from './employee.repository';
 import { EmployeeService } from './employee.service';
@@ -11,7 +11,8 @@ const mockEmployeeRepository = {
   ),
   softDelete: jest.fn((id: string) => updatedEmployee),
   retrieve: jest.fn(()=> [employee]),
-  retrieveSoftDeleted: jest.fn(()=> [softDeletedEmployee])
+  retrieveSoftDeleted: jest.fn(()=> [softDeletedEmployee]),
+  restoreSoftDelete : jest.fn(()=> restoredEmployee)
 };
 
 describe('EmployeeService', () => {
@@ -58,5 +59,10 @@ describe('EmployeeService', () => {
   it ('should be able to retrieve soft-deleted employees', async () => {
     let result = await employeeService.retrieveSoftDeleted();
     expect(result).toContain(softDeletedEmployee);
+  })
+
+  it ('should be able to restore soft-deleted employee', async () => {
+    let result = await employeeService.restoreSoftDelete('62873cf37262322c0744ccb1');
+    expect (result).toBe(restoredEmployee);
   })
 });
